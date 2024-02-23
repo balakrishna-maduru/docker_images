@@ -1,18 +1,13 @@
 FROM node:20.11.1
 
-# Install Python 3 from source
 ENV PUPPETEER_SKIP_DOWNLOAD=1
-
 
 RUN apt-get update \
     && apt-get upgrade -y \
-    && apt-get install -y make build-essential libssl-dev \
+    && apt-get install -y pkg-config make build-essential libssl-dev libsecret-1-0 libsecret-1-dev libxkbfile-dev libx11-dev \
     && apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
     && apt-get install -y libncurses5-dev  libncursesw5-dev xz-utils tk-dev \
-    && apt-get install -y python3
-
-RUN apt-get install -y libsecret-1-0 libsecret-1-dev\
-    && apt-get install -y yarn 
+    && apt-get install -y python3 yarn
 
 WORKDIR /home/theia
 ADD package.json ./package.json
