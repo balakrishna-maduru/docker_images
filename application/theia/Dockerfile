@@ -1,4 +1,4 @@
-FROM node:20.11.1
+FROM node:21-bookworm-slim
 
 ENV PUPPETEER_SKIP_DOWNLOAD=1
 
@@ -8,6 +8,7 @@ RUN apt-get update \
     && apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
     && apt-get install -y libncurses5-dev  libncursesw5-dev xz-utils tk-dev \
     && apt-get install -y python3 yarn
+RUN apt-get install -y libnss3 libexpat1 libexpat1-dev libyaml-0-2 libyaml-dev libwmf-0.2-7 libwmf-dev libgcrypt20 libgcrypt20-dev
 
 WORKDIR /home/theia
 ADD package.json ./package.json
