@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: theia_development
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: theia_production

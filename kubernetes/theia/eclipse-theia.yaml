@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: development
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: theia-ide
+  namespace: development
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: theia.ide.kute.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: theia-ide
+            port:
+              number: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: theia-ide
+ namespace: development
+spec:
+ ports:
+ - port: 3000
+   targetPort: 3000
+   protocol: TCP
+ selector:
+   app: theia-ide
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: theia-ide
+  name: theia-ide
+  namespace: development
+spec:
+  selector:
+    matchLabels:
+      app: theia-ide
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: theia-ide
+    spec:
+      containers:
+      - image: balumaduru/theia-for-development:0.0.2
+        imagePullPolicy: Always
+        name: theia-ide
+        ports:
+        - containerPort: 3000
